@@ -4,14 +4,28 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1" />
   <title>River Industries</title>
-  <meta name="description" content="River Industries. Quiet industrial systems for multi-planetary construction." />
+  <meta name="description" content="Quiet industrial systems for multi-planetary construction. Offices in Austin, Boston, and Jiangsu." />
   <meta name="theme-color" content="#050505" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <link rel="canonical" href="https://river.industries/" />
-  <!-- Instant poster paint + early video fetch -->
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://river.industries/" />
+  <meta property="og:title" content="River Industries" />
+  <meta property="og:description" content="Quiet industrial systems for multi-planetary construction." />
+  <meta property="og:image" content="https://river.industries/og.jpg" />
+  <meta property="og:image:width" content="1792" />
+  <meta property="og:image:height" content="1008" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="River Industries" />
+  <meta name="twitter:description" content="Quiet industrial systems for multi-planetary construction." />
+  <meta name="twitter:image" content="https://river.industries/og.jpg" />
   <link rel="preload" as="image" href="/hero-poster.jpg" fetchpriority="high" />
-  <link rel="preload" as="video" href="/hero.mp4" type="video/mp4" />
+  <link rel="preload" as="image" href="/hero-poster-mobile.jpg" fetchpriority="high" media="(max-width: 900px) and (orientation: portrait)" />
   <style>
     :root {
       --void: #050505;
@@ -19,245 +33,136 @@
       --ink-dim: rgba(244,244,242,0.5);
       --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
       --ease-soft: cubic-bezier(0.16, 1, 0.3, 1);
-      --dur-fast: 280ms;
-      --dur-med: 520ms;
       --dur-slow: 900ms;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html, body {
-      height: 100%;
-      height: 100dvh;
-      background: var(--void);
-      color: var(--ink);
+      height: 100%; height: 100dvh;
+      background: var(--void); color: var(--ink);
       font-family: Inter, "Helvetica Neue", ui-sans-serif, system-ui, -apple-system, sans-serif;
       -webkit-font-smoothing: antialiased;
       -webkit-tap-highlight-color: transparent;
-      overflow: hidden;
-      overscroll-behavior: none;
+      overflow: hidden; overscroll-behavior: none;
     }
-
-    /* ========== LOADER (transitions.dev: text reveal + skeleton → content) ========== */
     .loader {
-      position: fixed;
-      inset: 0;
-      z-index: 100;
-      display: grid;
-      place-items: center;
-      background: var(--void);
+      position: fixed; inset: 0; z-index: 100;
+      display: grid; place-items: center; background: var(--void);
       transition: opacity var(--dur-slow) var(--ease-soft), visibility var(--dur-slow) var(--ease-soft);
     }
-    .loader.is-done {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-    }
+    .loader.is-done { opacity: 0; visibility: hidden; pointer-events: none; }
     .loader-mark {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-      text-align: center;
-      opacity: 0;
-      filter: blur(10px);
-      transform: translateY(14px);
+      display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center;
+      opacity: 0; filter: blur(10px); transform: translateY(14px);
       animation: markIn 700ms var(--ease-soft) 80ms forwards;
     }
-    @keyframes markIn {
-      to { opacity: 1; filter: blur(0); transform: translateY(0); }
-    }
+    @keyframes markIn { to { opacity: 1; filter: blur(0); transform: translateY(0); } }
     .loader-word {
-      font-size: clamp(22px, 5.5vw, 34px);
-      font-weight: 500;
-      letter-spacing: 0.42em;
-      text-indent: 0.42em;
-      text-transform: uppercase;
-      color: var(--ink);
-      line-height: 1;
+      font-size: clamp(22px, 5.5vw, 34px); font-weight: 500;
+      letter-spacing: 0.42em; text-indent: 0.42em; text-transform: uppercase; line-height: 1;
     }
-    .loader-arc {
-      width: min(220px, 58vw);
-      height: 18px;
-      position: relative;
-      overflow: visible;
-    }
-    .loader-arc svg {
-      width: 100%;
-      height: 100%;
-      display: block;
-    }
+    .loader-arc { width: min(220px, 58vw); height: 18px; }
+    .loader-arc svg { width: 100%; height: 100%; display: block; }
     .loader-arc path {
-      fill: none;
-      stroke: rgba(244,244,242,0.92);
-      stroke-width: 1.4;
-      stroke-linecap: round;
-      stroke-dasharray: 180;
-      stroke-dashoffset: 180;
+      fill: none; stroke: rgba(244,244,242,0.92); stroke-width: 1.4; stroke-linecap: round;
+      stroke-dasharray: 180; stroke-dashoffset: 180;
       animation: drawArc 900ms var(--ease-soft) 280ms forwards;
     }
-    @keyframes drawArc {
-      to { stroke-dashoffset: 0; }
-    }
+    @keyframes drawArc { to { stroke-dashoffset: 0; } }
     .loader-sub {
-      margin-top: 4px;
-      font-size: 10px;
-      font-weight: 500;
-      letter-spacing: 0.32em;
-      text-indent: 0.32em;
-      text-transform: uppercase;
-      color: var(--ink-dim);
-      opacity: 0;
-      animation: markIn 600ms var(--ease-soft) 420ms forwards;
+      margin-top: 4px; font-size: 10px; font-weight: 500;
+      letter-spacing: 0.32em; text-indent: 0.32em; text-transform: uppercase; color: var(--ink-dim);
+      opacity: 0; animation: markIn 600ms var(--ease-soft) 420ms forwards;
     }
     .loader-bar {
-      position: absolute;
-      bottom: max(36px, env(safe-area-inset-bottom));
-      left: 50%;
-      transform: translateX(-50%);
-      width: min(120px, 30vw);
-      height: 1px;
-      background: rgba(244,244,242,0.08);
-      overflow: hidden;
-      border-radius: 1px;
-      opacity: 0;
-      animation: markIn 400ms var(--ease-soft) 500ms forwards;
+      position: absolute; bottom: max(36px, env(safe-area-inset-bottom)); left: 50%;
+      transform: translateX(-50%); width: min(120px, 30vw); height: 1px;
+      background: rgba(244,244,242,0.08); overflow: hidden; border-radius: 1px;
+      opacity: 0; animation: markIn 400ms var(--ease-soft) 500ms forwards;
     }
-    .loader-bar > i {
-      display: block;
-      height: 100%;
-      width: 0%;
-      background: rgba(244,244,242,0.55);
-      transition: width 0.35s var(--ease-out);
-    }
+    .loader-bar > i { display: block; height: 100%; width: 0%; background: rgba(244,244,242,0.55); transition: width 0.35s var(--ease-out); }
 
-    /* ========== HERO ========== */
     .hero {
-      position: fixed;
-      inset: 0;
-      background: var(--void);
-      display: grid;
-      place-items: center;
-      opacity: 0;
+      position: fixed; inset: 0; background: var(--void);
+      display: grid; place-items: center; opacity: 0;
       transition: opacity var(--dur-slow) var(--ease-soft);
     }
     .hero.is-in { opacity: 1; }
-    .hero .poster,
-    .hero video {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center center;
-      background: var(--void);
+    .hero .poster, .hero video {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; object-position: center center; background: var(--void);
     }
-    .hero video {
-      opacity: 0;
-      transition: opacity 700ms var(--ease-soft);
-    }
+    .hero video { opacity: 0; transition: opacity 700ms var(--ease-soft); }
     .hero video.is-ready { opacity: 1; }
+    .hero .poster-mobile, .hero video.mobile { display: none; }
     @media (max-width: 900px) and (orientation: portrait) {
-      .hero .poster,
-      .hero video {
-        object-fit: contain;
-        object-position: center 42%;
+      .hero .poster-desktop, .hero video.desktop { display: none; }
+      .hero .poster-mobile, .hero video.mobile {
+        display: block; object-fit: contain; object-position: center 42%;
       }
     }
     .overlay {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
+      position: absolute; inset: 0; pointer-events: none;
       background:
-        linear-gradient(to bottom, rgba(5,5,5,0.55) 0%, transparent 18%, transparent 78%, rgba(5,5,5,0.7) 100%),
+        linear-gradient(to bottom, rgba(5,5,5,0.55) 0%, transparent 18%, transparent 72%, rgba(5,5,5,0.75) 100%),
         radial-gradient(ellipse at center, transparent 45%, rgba(5,5,5,0.25) 100%);
     }
+    .tagline {
+      position: fixed; left: 0; right: 0; bottom: max(88px, calc(env(safe-area-inset-bottom) + 72px));
+      z-index: 15; text-align: center; pointer-events: none;
+      font-size: clamp(12px, 2.8vw, 15px); font-weight: 500;
+      letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-dim);
+      opacity: 0; filter: blur(6px); transform: translateY(10px);
+      transition: opacity 700ms var(--ease-soft), transform 700ms var(--ease-soft), filter 700ms var(--ease-soft);
+    }
+    .is-ready .tagline { opacity: 1; filter: blur(0); transform: translateY(0); transition-delay: 200ms; }
 
-    /* Chrome: stagger reveal after loader (transitions.dev texts reveal) */
     .nav, .footer {
-      opacity: 0;
-      transform: translateY(8px);
-      filter: blur(6px);
-      transition:
-        opacity 600ms var(--ease-soft),
-        transform 600ms var(--ease-soft),
-        filter 600ms var(--ease-soft);
+      opacity: 0; transform: translateY(8px); filter: blur(6px);
+      transition: opacity 600ms var(--ease-soft), transform 600ms var(--ease-soft), filter 600ms var(--ease-soft);
     }
-    .is-ready .nav,
-    .is-ready .footer {
-      opacity: 1;
-      transform: translateY(0);
-      filter: blur(0);
-    }
+    .is-ready .nav, .is-ready .footer { opacity: 1; transform: translateY(0); filter: blur(0); }
     .is-ready .footer { transition-delay: 90ms; }
-
     .nav {
-      position: fixed;
-      top: 0;
-      right: 0;
-      z-index: 20;
+      position: fixed; top: 0; right: 0; z-index: 20;
       padding: max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) 12px 12px;
     }
     .nav a {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 48px;
-      padding: 12px 18px;
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--ink-dim);
-      text-decoration: none;
-      border-radius: 999px;
-      background: rgba(5,5,5,0.35);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      display: inline-flex; align-items: center; justify-content: center;
+      min-height: 48px; padding: 12px 18px;
+      font-size: 11px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--ink-dim); text-decoration: none; border-radius: 999px;
+      background: rgba(5,5,5,0.35); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
       border: 1px solid rgba(244,244,242,0.08);
+      position: relative;
       transition: color 0.25s var(--ease-out), background 0.25s var(--ease-out);
     }
+    .nav a::after {
+      content: ""; position: absolute; left: 18px; right: 18px; bottom: 10px; height: 1px;
+      background: currentColor; transform: scaleX(0); transform-origin: left;
+      transition: transform 0.35s var(--ease-soft);
+    }
+    .nav a:hover::after, .nav a:focus-visible::after { transform: scaleX(1); }
     .nav a:active, .nav a:hover { color: var(--ink); background: rgba(5,5,5,0.55); }
     .footer {
-      position: fixed;
-      bottom: 0; left: 0; right: 0;
-      z-index: 20;
-      display: flex;
-      justify-content: center;
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 20;
+      display: flex; justify-content: center;
       padding: 12px max(16px, env(safe-area-inset-right)) max(16px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
       pointer-events: none;
     }
     .footer-inner {
-      pointer-events: auto;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 14px;
-      text-align: center;
+      pointer-events: auto; display: flex; flex-direction: column; align-items: center;
+      gap: 8px; padding: 10px 14px; text-align: center;
     }
     .footer a.mail {
-      font-size: 10px;
-      font-weight: 500;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--ink-dim);
-      text-decoration: none;
-      min-height: 36px;
-      display: inline-flex;
-      align-items: center;
-      transition: color 0.25s var(--ease-out);
+      font-size: 10px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--ink-dim); text-decoration: none; min-height: 36px;
+      display: inline-flex; align-items: center; transition: color 0.25s var(--ease-out);
     }
     .footer a.mail:hover, .footer a.mail:active { color: var(--ink); }
     .offices {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 6px 14px;
-      font-size: 9px;
-      font-weight: 500;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: rgba(244,244,242,0.38);
-      line-height: 1.4;
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 14px;
+      font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase;
+      color: rgba(244,244,242,0.38); line-height: 1.4;
     }
     .offices span { white-space: nowrap; }
     @media (min-width: 768px) {
@@ -267,19 +172,15 @@
     }
     @media (prefers-reduced-motion: reduce) {
       .loader-mark, .loader-sub, .loader-arc path, .loader-bar { animation: none !important; opacity: 1; filter: none; transform: none; stroke-dashoffset: 0; }
-      .loader { transition: none; }
-      .hero, .hero video, .nav, .footer { transition: none !important; filter: none !important; transform: none !important; }
+      .loader, .hero, .hero video, .nav, .footer, .tagline { transition: none !important; filter: none !important; transform: none !important; }
     }
   </style>
 </head>
 <body>
-  <!-- Fast black loader: logo first, then reveal -->
   <div class="loader" id="loader" aria-hidden="true">
     <div class="loader-mark">
       <div class="loader-arc" aria-hidden="true">
-        <svg viewBox="0 0 220 18" preserveAspectRatio="none">
-          <path d="M8 14 C 50 2, 170 2, 212 14" />
-        </svg>
+        <svg viewBox="0 0 220 18" preserveAspectRatio="none"><path d="M8 14 C 50 2, 170 2, 212 14" /></svg>
       </div>
       <div class="loader-word">River</div>
       <div class="loader-sub">Industries</div>
@@ -288,23 +189,16 @@
   </div>
 
   <div class="hero" id="heroWrap">
-    <img class="poster" src="/hero-poster.jpg" alt="" width="1280" height="720" decoding="async" fetchpriority="high" />
-    <video
-      id="hero"
-      src="/hero.mp4"
-      poster="/hero-poster.jpg"
-      muted
-      loop
-      playsinline
-      webkit-playsinline
-      preload="auto"
-    ></video>
+    <img class="poster poster-desktop" src="/hero-poster.jpg" alt="" width="1280" height="720" decoding="async" fetchpriority="high" />
+    <img class="poster poster-mobile" src="/hero-poster-mobile.jpg" alt="" width="720" height="1280" decoding="async" />
+    <video id="heroDesktop" class="desktop" src="/hero.mp4" poster="/hero-poster.jpg" muted loop playsinline webkit-playsinline preload="auto"></video>
+    <video id="heroMobile" class="mobile" src="/hero-mobile.mp4" poster="/hero-poster-mobile.jpg" muted loop playsinline webkit-playsinline preload="metadata"></video>
     <div class="overlay"></div>
   </div>
 
-  <nav class="nav">
-    <a href="/learn/">Learn more</a>
-  </nav>
+  <p class="tagline">Quiet industrial systems</p>
+
+  <nav class="nav"><a href="/learn/">Learn more</a></nav>
   <div class="footer">
     <div class="footer-inner">
       <a class="mail" href="mailto:hello@river.industries">hello@river.industries</a>
@@ -321,18 +215,21 @@
       var loader = document.getElementById('loader');
       var bar = document.getElementById('bar');
       var heroWrap = document.getElementById('heroWrap');
-      var video = document.getElementById('hero');
       var body = document.body;
-      var progress = 0;
-      var minShow = 1100; // logo gets a beat
-      var t0 = performance.now();
-      var done = false;
+      var isPortraitMobile = window.matchMedia('(max-width: 900px) and (orientation: portrait)').matches;
+      var video = document.getElementById(isPortraitMobile ? 'heroMobile' : 'heroDesktop');
+      var progress = 0, minShow = 1100, t0 = performance.now(), done = false;
 
       function setProgress(p) {
         progress = Math.max(progress, Math.min(1, p));
         if (bar) bar.style.width = (progress * 100).toFixed(1) + '%';
       }
-
+      function tryPlay() {
+        if (!video) return;
+        video.muted = true;
+        var p = video.play();
+        if (p && p.catch) p.catch(function () {});
+      }
       function finish() {
         if (done) return;
         done = true;
@@ -343,54 +240,22 @@
           loader.classList.add('is-done');
           body.classList.add('is-ready');
           tryPlay();
-          // remove loader from a11y / layout after fade
-          setTimeout(function () {
-            if (loader && loader.parentNode) loader.parentNode.removeChild(loader);
-          }, 1000);
+          setTimeout(function () { if (loader && loader.parentNode) loader.parentNode.removeChild(loader); }, 1000);
         }, wait + 120);
       }
 
-      function tryPlay() {
-        if (!video) return;
-        video.muted = true;
-        var p = video.play();
-        if (p && p.catch) p.catch(function () {});
-      }
-
-      // Poster already in DOM = instant paint
       setProgress(0.18);
-
-      // Track video readiness for snappy feel
       if (video) {
-        video.addEventListener('loadeddata', function () {
-          setProgress(0.55);
-          video.classList.add('is-ready');
-        });
-        video.addEventListener('canplay', function () {
-          setProgress(0.78);
-          video.classList.add('is-ready');
-          tryPlay();
-        });
-        video.addEventListener('canplaythrough', function () {
-          setProgress(1);
-          finish();
-        });
-        // Safety: never hang on slow networks
-        setTimeout(function () {
-          video.classList.add('is-ready');
-          finish();
-        }, 2800);
-        // Kick load early
+        video.addEventListener('loadeddata', function () { setProgress(0.55); video.classList.add('is-ready'); });
+        video.addEventListener('canplay', function () { setProgress(0.78); video.classList.add('is-ready'); tryPlay(); });
+        video.addEventListener('canplaythrough', function () { setProgress(1); finish(); });
+        setTimeout(function () { video.classList.add('is-ready'); finish(); }, 2800);
         try { video.load(); } catch (e) {}
         tryPlay();
-      } else {
-        finish();
-      }
+      } else finish();
 
       document.addEventListener('touchstart', tryPlay, { once: true, passive: true });
-      document.addEventListener('visibilitychange', function () {
-        if (!document.hidden) tryPlay();
-      });
+      document.addEventListener('visibilitychange', function () { if (!document.hidden) tryPlay(); });
     })();
   </script>
 </body>

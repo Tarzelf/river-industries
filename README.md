@@ -9,11 +9,14 @@ Quiet industrial systems for multi-planetary construction.
 - Boston, MA
 - Jiangsu, China
 
-## Site
-- `/` — logo loader → hero loop (logo + East Coast)
-- `/learn/` — coming soon + email signup + original robotic system videos
+## Site v1.1
+- `/` — logo loader → hero (desktop 16:9 + mobile 9:16) with office nodes · tagline
+- `/learn/` — coming soon · real waitlist API · system captions · lazy holos
+- OG image + favicon monogram
+
+## Waitlist
+`POST /api/waitlist` `{ "email": "..." }` → Cloudflare Worker + KV (`river-waitlist`)
 
 ## Stack
-- Static site on Cloudflare Pages (`river-industries.pages.dev`)
-- `river.industries` served via Cloudflare Worker proxy → Pages
+- Cloudflare Pages (static) + Worker (proxy + waitlist)
 - Source: https://github.com/Tarzelf/river-industries
