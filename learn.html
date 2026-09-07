@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Learn more — River Industries</title>
+  <meta name="description" content="Quiet industrial systems for multi-planetary construction. Coming soon." />
+  <meta name="theme-color" content="#050505" />
+  <style>
+    :root {
+      --void: #050505;
+      --ink: #f4f4f2;
+      --ink-dim: rgba(244,244,242,0.45);
+      --ink-mid: rgba(244,244,242,0.7);
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      min-height: 100%;
+      background: var(--void);
+      color: var(--ink);
+      font-family: Inter, "Helvetica Neue", Arial, system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100svh;
+    }
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: max(16px, env(safe-area-inset-top)) max(20px, env(safe-area-inset-right)) 16px max(20px, env(safe-area-inset-left));
+      background: rgba(5,5,5,0.85);
+      backdrop-filter: blur(12px);
+    }
+    .logo {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .back {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink-dim);
+      text-decoration: none;
+      transition: color 0.25s var(--ease);
+    }
+    .back:hover { color: var(--ink); }
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 48px 24px 80px;
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    h1 {
+      font-size: clamp(28px, 5vw, 48px);
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+    .sub {
+      font-size: 15px;
+      color: var(--ink-mid);
+      text-align: center;
+      max-width: 420px;
+      line-height: 1.5;
+      margin-bottom: 48px;
+    }
+    .form-wrap {
+      width: 100%;
+      max-width: 420px;
+      margin-bottom: 80px;
+    }
+    form {
+      display: flex;
+      gap: 8px;
+      width: 100%;
+    }
+    input[type="email"] {
+      flex: 1;
+      background: transparent;
+      border: 1px solid rgba(244,244,242,0.18);
+      border-radius: 999px;
+      padding: 14px 20px;
+      font-size: 14px;
+      color: var(--ink);
+      outline: none;
+      transition: border-color 0.25s var(--ease);
+    }
+    input[type="email"]::placeholder { color: var(--ink-dim); }
+    input[type="email"]:focus { border-color: rgba(244,244,242,0.5); }
+    button {
+      background: var(--ink);
+      color: var(--void);
+      border: none;
+      border-radius: 999px;
+      padding: 14px 24px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: opacity 0.25s var(--ease);
+    }
+    button:hover { opacity: 0.85; }
+    button:disabled { opacity: 0.5; cursor: default; }
+    .note {
+      font-size: 12px;
+      color: var(--ink-dim);
+      text-align: center;
+      margin-top: 12px;
+    }
+    .systems {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    @media (min-width: 768px) {
+      .systems { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    }
+    .system {
+      position: relative;
+      aspect-ratio: 16/9;
+      background: #0a0a0a;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid rgba(244,244,242,0.08);
+    }
+    .system video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .label {
+      position: absolute;
+      bottom: 12px;
+      left: 12px;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-dim);
+      background: rgba(5,5,5,0.6);
+      padding: 4px 10px;
+      border-radius: 999px;
+      backdrop-filter: blur(6px);
+    }
+    footer {
+      padding: 24px;
+      text-align: center;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-dim);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a class="logo" href="/">River Industries</a>
+    <a class="back" href="/">← Home</a>
+  </header>
+  <main>
+    <h1>Coming soon</h1>
+    <p class="sub">Quiet industrial systems for multi-planetary construction. Leave your email to get updates.</p>
+    <div class="form-wrap">
+      <form id="signup" action="#" method="post">
+        <input type="email" name="email" placeholder="you@company.com" required autocomplete="email" />
+        <button type="submit">Notify me</button>
+      </form>
+      <p class="note" id="msg"></p>
+    </div>
+    <div class="systems">
+      <div class="system">
+        <video src="/holo-paint.mp4" autoplay muted loop playsinline preload="metadata"></video>
+        <span class="label">Paint</span>
+      </div>
+      <div class="system">
+        <video src="/holo-frame.mp4" autoplay muted loop playsinline preload="metadata"></video>
+        <span class="label">Frame</span>
+      </div>
+      <div class="system">
+        <video src="/holo-floor.mp4" autoplay muted loop playsinline preload="metadata"></video>
+        <span class="label">Floor</span>
+      </div>
+    </div>
+  </main>
+  <footer>hello@river.industries · United States</footer>
+  <script>
+    document.getElementById('signup').addEventListener('submit', function(e) {
+      e.preventDefault();
+      var email = this.email.value.trim();
+      if (!email) return;
+      this.querySelector('button').disabled = true;
+      document.getElementById('msg').textContent = 'Thanks — we will be in touch.';
+      // In production wire to Formspree / Buttondown / your backend
+      this.reset();
+      setTimeout(function(){ document.querySelector('button').disabled = false; }, 2000);
+    });
+  </script>
+</body>
+</html>
