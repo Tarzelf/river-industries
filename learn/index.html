@@ -194,6 +194,16 @@
       text-align: center;
       font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
       color: var(--ink-dim);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: center;
+    }
+    footer .offices {
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      color: rgba(244,244,242,0.38);
+      text-transform: uppercase;
     }
     @media (prefers-reduced-motion: reduce) {
       .rise { animation: none; opacity: 1; filter: none; transform: none; }
@@ -232,7 +242,10 @@
       </div>
     </div>
   </main>
-  <footer class="rise d5">hello@river.industries · United States</footer>
+  <footer class="rise d5">
+    <div>hello@river.industries</div>
+    <div class="offices">Austin, TX · Boston, MA · Jiangsu, China</div>
+  </footer>
   <script>
     document.getElementById('signup').addEventListener('submit', function (e) {
       e.preventDefault();

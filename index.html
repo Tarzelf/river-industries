@@ -225,24 +225,45 @@
       padding: 12px max(16px, env(safe-area-inset-right)) max(16px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
       pointer-events: none;
     }
-    .footer a {
+    .footer-inner {
       pointer-events: auto;
-      display: inline-flex;
+      display: flex;
+      flex-direction: column;
       align-items: center;
-      min-height: 44px;
+      gap: 8px;
       padding: 10px 14px;
+      text-align: center;
+    }
+    .footer a.mail {
       font-size: 10px;
       font-weight: 500;
       letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--ink-dim);
       text-decoration: none;
+      min-height: 36px;
+      display: inline-flex;
+      align-items: center;
       transition: color 0.25s var(--ease-out);
     }
-    .footer a:hover, .footer a:active { color: var(--ink); }
+    .footer a.mail:hover, .footer a.mail:active { color: var(--ink); }
+    .offices {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 6px 14px;
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(244,244,242,0.38);
+      line-height: 1.4;
+    }
+    .offices span { white-space: nowrap; }
     @media (min-width: 768px) {
       .nav a { background: transparent; border: none; backdrop-filter: none; letter-spacing: 0.22em; }
-      .footer a { font-size: 11px; letter-spacing: 0.22em; }
+      .footer a.mail { font-size: 11px; letter-spacing: 0.22em; }
+      .offices { font-size: 10px; letter-spacing: 0.16em; gap: 8px 18px; }
     }
     @media (prefers-reduced-motion: reduce) {
       .loader-mark, .loader-sub, .loader-arc path, .loader-bar { animation: none !important; opacity: 1; filter: none; transform: none; stroke-dashoffset: 0; }
@@ -285,7 +306,14 @@
     <a href="/learn/">Learn more</a>
   </nav>
   <div class="footer">
-    <a href="mailto:hello@river.industries">hello@river.industries</a>
+    <div class="footer-inner">
+      <a class="mail" href="mailto:hello@river.industries">hello@river.industries</a>
+      <div class="offices">
+        <span>Austin, TX</span>
+        <span>Boston, MA</span>
+        <span>Jiangsu, China</span>
+      </div>
+    </div>
   </div>
 
   <script>
