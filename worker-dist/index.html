@@ -9,14 +9,19 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <link rel="canonical" href="https://river.industries/" />
-  <link rel="preload" as="image" href="/hero-poster.jpg" />
+  <!-- Instant poster paint + early video fetch -->
+  <link rel="preload" as="image" href="/hero-poster.jpg" fetchpriority="high" />
+  <link rel="preload" as="video" href="/hero.mp4" type="video/mp4" />
   <style>
     :root {
       --void: #050505;
       --ink: #f4f4f2;
       --ink-dim: rgba(244,244,242,0.5);
-      --ink-mid: rgba(244,244,242,0.72);
-      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+      --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+      --ease-soft: cubic-bezier(0.16, 1, 0.3, 1);
+      --dur-fast: 280ms;
+      --dur-med: 520ms;
+      --dur-slow: 900ms;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html, body {
@@ -30,15 +35,113 @@
       overflow: hidden;
       overscroll-behavior: none;
     }
+
+    /* ========== LOADER (transitions.dev: text reveal + skeleton → content) ========== */
+    .loader {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: grid;
+      place-items: center;
+      background: var(--void);
+      transition: opacity var(--dur-slow) var(--ease-soft), visibility var(--dur-slow) var(--ease-soft);
+    }
+    .loader.is-done {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    .loader-mark {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      text-align: center;
+      opacity: 0;
+      filter: blur(10px);
+      transform: translateY(14px);
+      animation: markIn 700ms var(--ease-soft) 80ms forwards;
+    }
+    @keyframes markIn {
+      to { opacity: 1; filter: blur(0); transform: translateY(0); }
+    }
+    .loader-word {
+      font-size: clamp(22px, 5.5vw, 34px);
+      font-weight: 500;
+      letter-spacing: 0.42em;
+      text-indent: 0.42em;
+      text-transform: uppercase;
+      color: var(--ink);
+      line-height: 1;
+    }
+    .loader-arc {
+      width: min(220px, 58vw);
+      height: 18px;
+      position: relative;
+      overflow: visible;
+    }
+    .loader-arc svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    .loader-arc path {
+      fill: none;
+      stroke: rgba(244,244,242,0.92);
+      stroke-width: 1.4;
+      stroke-linecap: round;
+      stroke-dasharray: 180;
+      stroke-dashoffset: 180;
+      animation: drawArc 900ms var(--ease-soft) 280ms forwards;
+    }
+    @keyframes drawArc {
+      to { stroke-dashoffset: 0; }
+    }
+    .loader-sub {
+      margin-top: 4px;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.32em;
+      text-indent: 0.32em;
+      text-transform: uppercase;
+      color: var(--ink-dim);
+      opacity: 0;
+      animation: markIn 600ms var(--ease-soft) 420ms forwards;
+    }
+    .loader-bar {
+      position: absolute;
+      bottom: max(36px, env(safe-area-inset-bottom));
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(120px, 30vw);
+      height: 1px;
+      background: rgba(244,244,242,0.08);
+      overflow: hidden;
+      border-radius: 1px;
+      opacity: 0;
+      animation: markIn 400ms var(--ease-soft) 500ms forwards;
+    }
+    .loader-bar > i {
+      display: block;
+      height: 100%;
+      width: 0%;
+      background: rgba(244,244,242,0.55);
+      transition: width 0.35s var(--ease-out);
+    }
+
+    /* ========== HERO ========== */
     .hero {
       position: fixed;
       inset: 0;
       background: var(--void);
       display: grid;
       place-items: center;
+      opacity: 0;
+      transition: opacity var(--dur-slow) var(--ease-soft);
     }
-    .hero video,
-    .hero .poster {
+    .hero.is-in { opacity: 1; }
+    .hero .poster,
+    .hero video {
       position: absolute;
       inset: 0;
       width: 100%;
@@ -47,15 +150,16 @@
       object-position: center center;
       background: var(--void);
     }
-    /* Mobile: keep full composition visible instead of heavy crop */
+    .hero video {
+      opacity: 0;
+      transition: opacity 700ms var(--ease-soft);
+    }
+    .hero video.is-ready { opacity: 1; }
     @media (max-width: 900px) and (orientation: portrait) {
-      .hero video,
-      .hero .poster {
+      .hero .poster,
+      .hero video {
         object-fit: contain;
         object-position: center 42%;
-        width: 100%;
-        height: 100%;
-        padding: 0 env(safe-area-inset-right) 0 env(safe-area-inset-left);
       }
     }
     .overlay {
@@ -66,6 +170,25 @@
         linear-gradient(to bottom, rgba(5,5,5,0.55) 0%, transparent 18%, transparent 78%, rgba(5,5,5,0.7) 100%),
         radial-gradient(ellipse at center, transparent 45%, rgba(5,5,5,0.25) 100%);
     }
+
+    /* Chrome: stagger reveal after loader (transitions.dev texts reveal) */
+    .nav, .footer {
+      opacity: 0;
+      transform: translateY(8px);
+      filter: blur(6px);
+      transition:
+        opacity 600ms var(--ease-soft),
+        transform 600ms var(--ease-soft),
+        filter 600ms var(--ease-soft);
+    }
+    .is-ready .nav,
+    .is-ready .footer {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
+    }
+    .is-ready .footer { transition-delay: 90ms; }
+
     .nav {
       position: fixed;
       top: 0;
@@ -78,7 +201,6 @@
       align-items: center;
       justify-content: center;
       min-height: 48px;
-      min-width: 48px;
       padding: 12px 18px;
       font-size: 11px;
       font-weight: 500;
@@ -91,54 +213,86 @@
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
       border: 1px solid rgba(244,244,242,0.08);
-      transition: color 0.25s var(--ease), background 0.25s var(--ease);
+      transition: color 0.25s var(--ease-out), background 0.25s var(--ease-out);
     }
-    .nav a:active,
-    .nav a:hover { color: var(--ink); background: rgba(5,5,5,0.55); }
+    .nav a:active, .nav a:hover { color: var(--ink); background: rgba(5,5,5,0.55); }
     .footer {
       position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
+      bottom: 0; left: 0; right: 0;
       z-index: 20;
       display: flex;
       justify-content: center;
       padding: 12px max(16px, env(safe-area-inset-right)) max(16px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
       pointer-events: none;
     }
-    .footer a {
+    .footer-inner {
       pointer-events: auto;
-      display: inline-flex;
+      display: flex;
+      flex-direction: column;
       align-items: center;
-      min-height: 44px;
+      gap: 8px;
       padding: 10px 14px;
+      text-align: center;
+    }
+    .footer a.mail {
       font-size: 10px;
       font-weight: 500;
       letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--ink-dim);
       text-decoration: none;
-      transition: color 0.25s var(--ease);
+      min-height: 36px;
+      display: inline-flex;
+      align-items: center;
+      transition: color 0.25s var(--ease-out);
     }
-    .footer a:hover,
-    .footer a:active { color: var(--ink); }
+    .footer a.mail:hover, .footer a.mail:active { color: var(--ink); }
+    .offices {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 6px 14px;
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(244,244,242,0.38);
+      line-height: 1.4;
+    }
+    .offices span { white-space: nowrap; }
     @media (min-width: 768px) {
-      .nav a { font-size: 11px; letter-spacing: 0.22em; background: transparent; border: none; backdrop-filter: none; }
-      .footer a { font-size: 11px; letter-spacing: 0.22em; }
+      .nav a { background: transparent; border: none; backdrop-filter: none; letter-spacing: 0.22em; }
+      .footer a.mail { font-size: 11px; letter-spacing: 0.22em; }
+      .offices { font-size: 10px; letter-spacing: 0.16em; gap: 8px 18px; }
     }
     @media (prefers-reduced-motion: reduce) {
-      .hero video { display: none; }
+      .loader-mark, .loader-sub, .loader-arc path, .loader-bar { animation: none !important; opacity: 1; filter: none; transform: none; stroke-dashoffset: 0; }
+      .loader { transition: none; }
+      .hero, .hero video, .nav, .footer { transition: none !important; filter: none !important; transform: none !important; }
     }
   </style>
 </head>
 <body>
-  <div class="hero">
-    <img class="poster" src="/hero-poster.jpg" alt="" aria-hidden="true" />
+  <!-- Fast black loader: logo first, then reveal -->
+  <div class="loader" id="loader" aria-hidden="true">
+    <div class="loader-mark">
+      <div class="loader-arc" aria-hidden="true">
+        <svg viewBox="0 0 220 18" preserveAspectRatio="none">
+          <path d="M8 14 C 50 2, 170 2, 212 14" />
+        </svg>
+      </div>
+      <div class="loader-word">River</div>
+      <div class="loader-sub">Industries</div>
+    </div>
+    <div class="loader-bar"><i id="bar"></i></div>
+  </div>
+
+  <div class="hero" id="heroWrap">
+    <img class="poster" src="/hero-poster.jpg" alt="" width="1280" height="720" decoding="async" fetchpriority="high" />
     <video
       id="hero"
       src="/hero.mp4"
       poster="/hero-poster.jpg"
-      autoplay
       muted
       loop
       playsinline
@@ -147,23 +301,92 @@
     ></video>
     <div class="overlay"></div>
   </div>
+
   <nav class="nav">
     <a href="/learn/">Learn more</a>
   </nav>
   <div class="footer">
-    <a href="mailto:hello@river.industries">hello@river.industries</a>
+    <div class="footer-inner">
+      <a class="mail" href="mailto:hello@river.industries">hello@river.industries</a>
+      <div class="offices">
+        <span>Austin, TX</span>
+        <span>Boston, MA</span>
+        <span>Jiangsu, China</span>
+      </div>
+    </div>
   </div>
+
   <script>
     (function () {
-      var v = document.getElementById('hero');
-      if (!v) return;
-      v.muted = true;
-      v.setAttribute('playsinline', '');
-      var tryPlay = function () {
-        var p = v.play();
+      var loader = document.getElementById('loader');
+      var bar = document.getElementById('bar');
+      var heroWrap = document.getElementById('heroWrap');
+      var video = document.getElementById('hero');
+      var body = document.body;
+      var progress = 0;
+      var minShow = 1100; // logo gets a beat
+      var t0 = performance.now();
+      var done = false;
+
+      function setProgress(p) {
+        progress = Math.max(progress, Math.min(1, p));
+        if (bar) bar.style.width = (progress * 100).toFixed(1) + '%';
+      }
+
+      function finish() {
+        if (done) return;
+        done = true;
+        setProgress(1);
+        var wait = Math.max(0, minShow - (performance.now() - t0));
+        setTimeout(function () {
+          heroWrap.classList.add('is-in');
+          loader.classList.add('is-done');
+          body.classList.add('is-ready');
+          tryPlay();
+          // remove loader from a11y / layout after fade
+          setTimeout(function () {
+            if (loader && loader.parentNode) loader.parentNode.removeChild(loader);
+          }, 1000);
+        }, wait + 120);
+      }
+
+      function tryPlay() {
+        if (!video) return;
+        video.muted = true;
+        var p = video.play();
         if (p && p.catch) p.catch(function () {});
-      };
-      tryPlay();
+      }
+
+      // Poster already in DOM = instant paint
+      setProgress(0.18);
+
+      // Track video readiness for snappy feel
+      if (video) {
+        video.addEventListener('loadeddata', function () {
+          setProgress(0.55);
+          video.classList.add('is-ready');
+        });
+        video.addEventListener('canplay', function () {
+          setProgress(0.78);
+          video.classList.add('is-ready');
+          tryPlay();
+        });
+        video.addEventListener('canplaythrough', function () {
+          setProgress(1);
+          finish();
+        });
+        // Safety: never hang on slow networks
+        setTimeout(function () {
+          video.classList.add('is-ready');
+          finish();
+        }, 2800);
+        // Kick load early
+        try { video.load(); } catch (e) {}
+        tryPlay();
+      } else {
+        finish();
+      }
+
       document.addEventListener('touchstart', tryPlay, { once: true, passive: true });
       document.addEventListener('visibilitychange', function () {
         if (!document.hidden) tryPlay();
