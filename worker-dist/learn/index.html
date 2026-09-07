@@ -4,211 +4,129 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1" />
   <title>Learn more — River Industries</title>
-  <meta name="description" content="Quiet industrial systems for multi-planetary construction. Coming soon." />
+  <meta name="description" content="Quiet industrial systems for multi-planetary construction. Coming soon. Offices in Austin, Boston, and Jiangsu." />
   <meta name="theme-color" content="#050505" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="canonical" href="https://river.industries/learn/" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://river.industries/learn/" />
+  <meta property="og:title" content="Learn more — River Industries" />
+  <meta property="og:description" content="Quiet industrial systems for multi-planetary construction. Coming soon." />
+  <meta property="og:image" content="https://river.industries/og.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://river.industries/og.jpg" />
   <style>
     :root {
-      --void: #050505;
-      --ink: #f4f4f2;
-      --ink-dim: rgba(244,244,242,0.5);
-      --ink-mid: rgba(244,244,242,0.72);
-      --ease: cubic-bezier(0.22, 1, 0.36, 1);
-      --ease-soft: cubic-bezier(0.16, 1, 0.3, 1);
+      --void: #050505; --ink: #f4f4f2;
+      --ink-dim: rgba(244,244,242,0.5); --ink-mid: rgba(244,244,242,0.72);
+      --ease: cubic-bezier(0.22, 1, 0.36, 1); --ease-soft: cubic-bezier(0.16, 1, 0.3, 1);
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html, body {
-      min-height: 100%;
-      background: var(--void);
-      color: var(--ink);
+      min-height: 100%; background: var(--void); color: var(--ink);
       font-family: Inter, "Helvetica Neue", ui-sans-serif, system-ui, -apple-system, sans-serif;
-      -webkit-font-smoothing: antialiased;
-      -webkit-tap-highlight-color: transparent;
+      -webkit-font-smoothing: antialiased; -webkit-tap-highlight-color: transparent;
     }
-    body {
-      display: flex;
-      flex-direction: column;
-      min-height: 100svh;
-      min-height: 100dvh;
-    }
-    /* page enter */
+    body { display: flex; flex-direction: column; min-height: 100svh; min-height: 100dvh; }
     .rise {
-      opacity: 0;
-      filter: blur(8px);
-      transform: translateY(12px);
+      opacity: 0; filter: blur(8px); transform: translateY(12px);
       animation: riseIn 700ms var(--ease-soft) forwards;
     }
-    .rise.d1 { animation-delay: 40ms; }
-    .rise.d2 { animation-delay: 100ms; }
-    .rise.d3 { animation-delay: 160ms; }
-    .rise.d4 { animation-delay: 220ms; }
+    .rise.d1 { animation-delay: 40ms; } .rise.d2 { animation-delay: 100ms; }
+    .rise.d3 { animation-delay: 160ms; } .rise.d4 { animation-delay: 220ms; }
     .rise.d5 { animation-delay: 300ms; }
-    @keyframes riseIn {
-      to { opacity: 1; filter: blur(0); transform: translateY(0); }
-    }
+    @keyframes riseIn { to { opacity: 1; filter: blur(0); transform: translateY(0); } }
     header {
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
+      position: sticky; top: 0; z-index: 20;
+      display: flex; justify-content: space-between; align-items: center; gap: 12px;
       padding: max(12px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) 12px max(16px, env(safe-area-inset-left));
-      background: rgba(5,5,5,0.88);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      background: rgba(5,5,5,0.88); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid rgba(244,244,242,0.06);
     }
     .logo {
-      font-size: 12px;
-      font-weight: 500;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--ink);
-      text-decoration: none;
-      white-space: nowrap;
-      min-height: 44px;
-      display: inline-flex;
-      align-items: center;
+      font-size: 12px; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--ink); text-decoration: none; white-space: nowrap; min-height: 44px;
+      display: inline-flex; align-items: center;
     }
     .back {
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--ink-dim);
-      text-decoration: none;
-      min-height: 44px;
-      display: inline-flex;
-      align-items: center;
-      padding: 8px 4px;
-      white-space: nowrap;
+      font-size: 11px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--ink-dim); text-decoration: none; min-height: 44px;
+      display: inline-flex; align-items: center; padding: 8px 4px; white-space: nowrap;
     }
     .back:active { color: var(--ink); }
     main {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
-      max-width: 1100px;
-      margin: 0 auto;
+      flex: 1; display: flex; flex-direction: column; align-items: center;
+      width: 100%; max-width: 1100px; margin: 0 auto;
       padding: 40px max(20px, env(safe-area-inset-right)) 64px max(20px, env(safe-area-inset-left));
     }
     h1 {
-      font-size: clamp(32px, 8vw, 48px);
-      font-weight: 500;
-      letter-spacing: -0.03em;
-      text-align: center;
-      margin-bottom: 14px;
-      line-height: 1.1;
+      font-size: clamp(32px, 8vw, 48px); font-weight: 500; letter-spacing: -0.03em;
+      text-align: center; margin-bottom: 14px; line-height: 1.1;
     }
     .sub {
-      font-size: 15px;
-      color: var(--ink-mid);
-      text-align: center;
-      max-width: 380px;
-      line-height: 1.55;
-      margin-bottom: 36px;
-      padding: 0 4px;
+      font-size: 15px; color: var(--ink-mid); text-align: center; max-width: 380px;
+      line-height: 1.55; margin-bottom: 36px; padding: 0 4px;
     }
     .form-wrap { width: 100%; max-width: 420px; margin-bottom: 56px; }
     form { display: flex; flex-direction: column; gap: 10px; width: 100%; }
     @media (min-width: 520px) { form { flex-direction: row; gap: 8px; } }
     input[type="email"] {
-      flex: 1; width: 100%;
-      background: rgba(244,244,242,0.03);
-      border: 1px solid rgba(244,244,242,0.16);
-      border-radius: 999px;
-      padding: 16px 20px;
-      font-size: 16px;
-      color: var(--ink);
-      outline: none;
-      -webkit-appearance: none;
-      appearance: none;
-      transition: border-color 0.25s var(--ease);
+      flex: 1; width: 100%; background: rgba(244,244,242,0.03);
+      border: 1px solid rgba(244,244,242,0.16); border-radius: 999px;
+      padding: 16px 20px; font-size: 16px; color: var(--ink); outline: none;
+      -webkit-appearance: none; appearance: none; transition: border-color 0.25s var(--ease);
     }
     input[type="email"]::placeholder { color: var(--ink-dim); }
     input[type="email"]:focus { border-color: rgba(244,244,242,0.45); }
     button {
-      width: 100%;
-      background: var(--ink);
-      color: var(--void);
-      border: none;
-      border-radius: 999px;
-      padding: 16px 24px;
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      cursor: pointer;
-      min-height: 52px;
-      -webkit-appearance: none;
-      appearance: none;
-      transition: opacity 0.25s var(--ease);
+      width: 100%; background: var(--ink); color: var(--void); border: none; border-radius: 999px;
+      padding: 16px 24px; font-size: 12px; font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; cursor: pointer; min-height: 52px;
+      -webkit-appearance: none; appearance: none; transition: opacity 0.25s var(--ease);
     }
     @media (min-width: 520px) { button { width: auto; white-space: nowrap; } }
-    button:active { opacity: 0.85; }
-    button:disabled { opacity: 0.5; cursor: default; }
+    button:active { opacity: 0.85; } button:disabled { opacity: 0.5; cursor: default; }
     .note { font-size: 13px; color: var(--ink-dim); text-align: center; margin-top: 14px; min-height: 1.2em; }
-    .systems { width: 100%; display: grid; grid-template-columns: 1fr; gap: 14px; }
-    @media (min-width: 640px) { .systems { grid-template-columns: repeat(3, 1fr); gap: 14px; } }
+    .systems { width: 100%; display: grid; grid-template-columns: 1fr; gap: 20px; }
+    @media (min-width: 640px) { .systems { grid-template-columns: repeat(3, 1fr); gap: 16px; } }
+    .system-card { display: flex; flex-direction: column; gap: 10px; }
     .system {
-      position: relative;
-      aspect-ratio: 16 / 10;
-      background: #0a0a0a;
-      border-radius: 12px;
-      overflow: hidden;
-      border: 1px solid rgba(244,244,242,0.08);
-      /* skeleton pulse until video paints */
+      position: relative; aspect-ratio: 16 / 10; background: #0a0a0a; border-radius: 12px;
+      overflow: hidden; border: 1px solid rgba(244,244,242,0.08);
       background-image: linear-gradient(90deg, #0a0a0a 0%, #121212 50%, #0a0a0a 100%);
-      background-size: 200% 100%;
-      animation: skeleton 1.2s ease-in-out infinite;
+      background-size: 200% 100%; animation: skeleton 1.2s ease-in-out infinite;
     }
-    @keyframes skeleton {
-      0% { background-position: 100% 0; }
-      100% { background-position: -100% 0; }
-    }
+    @keyframes skeleton { 0% { background-position: 100% 0; } 100% { background-position: -100% 0; } }
     .system.is-live { animation: none; background-image: none; background: #0a0a0a; }
     .system video {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      display: block;
-      opacity: 0;
-      transition: opacity 500ms var(--ease-soft);
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      opacity: 0; transition: opacity 500ms var(--ease-soft);
     }
     .system.is-live video { opacity: 1; }
     .label {
-      position: absolute; bottom: 12px; left: 12px;
-      font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
-      color: var(--ink-dim);
-      background: rgba(5,5,5,0.65);
-      padding: 6px 12px; border-radius: 999px;
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+      position: absolute; bottom: 12px; left: 12px; font-size: 10px; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--ink-dim); background: rgba(5,5,5,0.65);
+      padding: 6px 12px; border-radius: 999px; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    }
+    .caption {
+      font-size: 12px; line-height: 1.45; color: var(--ink-dim); letter-spacing: 0.02em;
+      padding: 0 2px;
+    }
+    .caption strong {
+      display: block; font-size: 11px; font-weight: 500; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--ink-mid); margin-bottom: 4px;
     }
     footer {
       padding: 20px max(16px, env(safe-area-inset-right)) max(28px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
-      text-align: center;
-      font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
-      color: var(--ink-dim);
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      align-items: center;
+      text-align: center; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--ink-dim); display: flex; flex-direction: column; gap: 8px; align-items: center;
     }
-    footer .offices {
-      font-size: 9px;
-      letter-spacing: 0.12em;
-      color: rgba(244,244,242,0.38);
-      text-transform: uppercase;
-    }
+    footer .offices { font-size: 9px; letter-spacing: 0.12em; color: rgba(244,244,242,0.38); text-transform: uppercase; }
     @media (prefers-reduced-motion: reduce) {
       .rise { animation: none; opacity: 1; filter: none; transform: none; }
-      .system { animation: none; }
-      .system video { opacity: 1; transition: none; }
+      .system { animation: none; } .system video { opacity: 1; transition: none; }
     }
   </style>
 </head>
@@ -221,24 +139,33 @@
     <h1 class="rise d1">Coming soon</h1>
     <p class="sub rise d2">Quiet industrial systems for multi-planetary construction. Leave your email to get updates.</p>
     <div class="form-wrap rise d3">
-      <form id="signup" action="#" method="post">
+      <form id="signup">
         <input type="email" name="email" placeholder="you@company.com" required autocomplete="email" inputmode="email" enterkeyhint="send" />
-        <button type="submit">Notify me</button>
+        <button type="submit" id="submitBtn">Notify me</button>
       </form>
-      <p class="note" id="msg"></p>
+      <p class="note" id="msg" role="status"></p>
     </div>
     <div class="systems rise d4">
-      <div class="system" data-vid>
-        <video src="/holo-paint.mp4" muted loop playsinline webkit-playsinline preload="metadata"></video>
-        <span class="label">Paint</span>
+      <div class="system-card">
+        <div class="system" data-vid>
+          <video src="/holo-paint.mp4" muted loop playsinline webkit-playsinline preload="none"></video>
+          <span class="label">Paint</span>
+        </div>
+        <p class="caption"><strong>Paint</strong> Precision surface systems for panelized construction.</p>
       </div>
-      <div class="system" data-vid>
-        <video src="/holo-frame.mp4" muted loop playsinline webkit-playsinline preload="metadata"></video>
-        <span class="label">Frame</span>
+      <div class="system-card">
+        <div class="system" data-vid>
+          <video src="/holo-frame.mp4" muted loop playsinline webkit-playsinline preload="none"></video>
+          <span class="label">Frame</span>
+        </div>
+        <p class="caption"><strong>Frame</strong> Structural framing robots for quiet, exact builds.</p>
       </div>
-      <div class="system" data-vid>
-        <video src="/holo-floor.mp4" muted loop playsinline webkit-playsinline preload="metadata"></video>
-        <span class="label">Floor</span>
+      <div class="system-card">
+        <div class="system" data-vid>
+          <video src="/holo-floor.mp4" muted loop playsinline webkit-playsinline preload="none"></video>
+          <span class="label">Floor</span>
+        </div>
+        <p class="caption"><strong>Floor</strong> Floor and deck systems ready for the next surface.</p>
       </div>
     </div>
   </main>
@@ -247,30 +174,69 @@
     <div class="offices">Austin, TX · Boston, MA · Jiangsu, China</div>
   </footer>
   <script>
-    document.getElementById('signup').addEventListener('submit', function (e) {
+    document.getElementById('signup').addEventListener('submit', async function (e) {
       e.preventDefault();
       var email = this.email.value.trim();
       if (!email) return;
-      this.querySelector('button').disabled = true;
-      document.getElementById('msg').textContent = 'Thanks — we will be in touch.';
-      this.reset();
-      var btn = this.querySelector('button');
-      setTimeout(function () { btn.disabled = false; }, 2000);
-    });
-    // Skeleton → content cross-fade (transitions.dev style) + play when ready
-    document.querySelectorAll('[data-vid]').forEach(function (card) {
-      var v = card.querySelector('video');
-      if (!v) return;
-      function live() {
-        card.classList.add('is-live');
-        v.muted = true;
-        var p = v.play();
-        if (p && p.catch) p.catch(function () {});
+      var btn = document.getElementById('submitBtn');
+      var msg = document.getElementById('msg');
+      btn.disabled = true;
+      msg.textContent = 'Sending…';
+      try {
+        var res = await fetch('/api/waitlist', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ email: email })
+        });
+        var data = await res.json().catch(function () { return {}; });
+        if (res.ok) {
+          msg.textContent = data.message || 'Thanks — we will be in touch.';
+          this.reset();
+        } else {
+          msg.textContent = data.error || 'Something went wrong. Try again.';
+        }
+      } catch (err) {
+        msg.textContent = 'Network error. Try again or email hello@river.industries.';
       }
-      if (v.readyState >= 2) live();
+      btn.disabled = false;
+    });
+
+    // Lazy play holos when near viewport
+    var io = 'IntersectionObserver' in window ? new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        var card = entry.target;
+        var v = card.querySelector('video');
+        if (!v || card.dataset.loaded) return;
+        card.dataset.loaded = '1';
+        v.preload = 'metadata';
+        v.load();
+        function live() {
+          card.classList.add('is-live');
+          v.muted = true;
+          var p = v.play();
+          if (p && p.catch) p.catch(function () {});
+        }
+        if (v.readyState >= 2) live();
+        else {
+          v.addEventListener('loadeddata', live, { once: true });
+          v.addEventListener('canplay', live, { once: true });
+        }
+        io.unobserve(card);
+      });
+    }, { rootMargin: '120px' }) : null;
+
+    document.querySelectorAll('[data-vid]').forEach(function (card) {
+      if (io) io.observe(card);
       else {
-        v.addEventListener('loadeddata', live, { once: true });
-        v.addEventListener('canplay', live, { once: true });
+        var v = card.querySelector('video');
+        if (!v) return;
+        v.preload = 'metadata';
+        v.addEventListener('loadeddata', function () {
+          card.classList.add('is-live');
+          v.muted = true; v.play().catch(function () {});
+        }, { once: true });
+        v.load();
       }
     });
   </script>

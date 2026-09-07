@@ -2,7 +2,6 @@ name = "river-industries"
 main = "worker.js"
 compatibility_date = "2026-09-01"
 
-[assets]
-directory = "./"
-binding = "ASSETS"
-not_found_handling = "single-page-application"
+[[kv_namespaces]]
+binding = "WAITLIST"
+id = "b3849233f178445d9fdd2dfc2fada996"
